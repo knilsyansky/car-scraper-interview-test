@@ -1,0 +1,26 @@
+# Пропущен из-за невозможности зарегаться
+
+
+
+# AI generated
+
+services:
+  # Бэкенд сервис
+  - type: web
+    name: carsensor-backend
+    env: node
+    plan: free
+    region: frankfurt # Ближе к РФ/Европе
+    rootDir: backend
+    # Установка зависимостей + браузера Chromium для Playwright
+    buildCommand: npm install && npx playwright install --with-deps chromium
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        value: postgresql://postgres:password@db.bsjwhcezyfetoprbriib.supabase.co:5432/postgres # TODO replace password in dashboard to actual passsword
+      - key: JWT_SECRET
+        generateValue: true # Автогенерация секрета при деплое
+      - key: CORS_ORIGIN
+        value: https://your-frontend-link.vercel.app # TODO replace link to actual after deploy
