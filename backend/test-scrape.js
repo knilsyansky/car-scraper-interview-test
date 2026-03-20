@@ -1,4 +1,4 @@
-const { chromium } = require('playwright');
+import { chromium } from 'playwright';
 
 async function scrapeCars() {
   // 1. Запуск браузера (headless: true - без окна, false - если хочешь видеть процесс)
@@ -46,4 +46,4 @@ async function scrapeCars() {
 
 scrapeCars()
 
-module.exports = { scrapeCars };
+export default { scrapeCars };

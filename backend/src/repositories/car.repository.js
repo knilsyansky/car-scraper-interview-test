@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 class CarRepository {
@@ -20,4 +20,4 @@ class CarRepository {
     }
 }
 
-module.exports = new CarRepository();
+export default new CarRepository();
