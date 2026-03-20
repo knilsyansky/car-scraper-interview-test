@@ -1,32 +1,45 @@
-import express, { json } from 'express';
+import express from 'express';
 import cors from 'cors';
+import cron from 'node-cron';
+import dotenv from 'dotenv';
+
+// Routes
+import apiRouter from '#routes/index.js';
+
+// Services
+import scraperService from '#services/scraper.service.js';
+
+dotenv.config();
 
 const app = express();
 
+// Middleware
 app.use(cors());
-app.use(json());
+app.use(express.json());
+
+// API Routes 
+app.use('/api', apiRouter);
 
 app.get('/', (req, res) => {
     res.json({
         status: 'ok',
-        message: 'Backend is running!',
-        time: new Date().toISOString(),
+        message: 'CarSensor API is running',
+        version: '1.0.0'
     });
 });
 
-app.get('/health', async (req, res) => {
-    try {
-        res.json({
-            db: 'connected', 
-            timestamp: new Date()
-        });
-    } catch (error) {
-        res.status(500).json({
-            db: 'error',
-            message: error.message,
-        });
-    }
+// Health check
+app.get('/health', (req, res) => {
+    res.json({ status: 'healthy', timestamp: new Date() });
 });
+
+
+// Worker
+cron.schedule('0 * * * *', async () => {
+    console.log('Running scheduled scraping...');
+    await scraperService.run();
+});
+
 
 const PORT = process.env.PORT || 3001;
 
