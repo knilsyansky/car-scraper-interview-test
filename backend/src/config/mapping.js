@@ -13,6 +13,10 @@ const brandMapping = {
   'フォルクスワーゲン': 'Volkswagen',
   'アウディ': 'Audi',
   'いすゞ': 'Mazda',
+  'デイズ': '',
+  'フレアワゴン': '',
+  'タント': '',
+  'ムーヴ': '',
 };
 
 export default brandMapping;

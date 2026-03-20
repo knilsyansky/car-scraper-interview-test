@@ -4,7 +4,7 @@
 
 ## Ссылки (Deploy)
 - **Frontend (Vercel):** https://car-scraper-interview-test-versel.vercel.app/
-- **Backend (Render):** [ССЫЛКА_НА_РЕНДЕР] //TODO fill link
+- **Backend (Render):** https://car-scraper-roman2knils.amvera.io/
 *Примечание: Первая загрузка за какой-то период может длиться до одной минуты*
 
 ## Стек технологий
