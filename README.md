@@ -3,7 +3,7 @@
 Приложение для мониторинга карточек автомобилей с японского сайта CarSensor.net. Включает в себя автоматический скрапер, API с JWT-авторизацией и адаптивный фронтенд.
 
 ## Ссылки (Deploy)
-- **Frontend (Vercel):** [ССЫЛКА_НА_ВЕРСЕЛЬ] //TODO fill link
+- **Frontend (Vercel):** https://car-scraper-interview-test-versel.vercel.app/
 - **Backend (Render):** [ССЫЛКА_НА_РЕНДЕР] //TODO fill link
 *Примечание: Первая загрузка за какой-то период может длиться до одной минуты*
 

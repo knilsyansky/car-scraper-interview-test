@@ -1,0 +1,10 @@
+meta:
+    name: carsensor-backend
+    toostack:
+        name: nodejs
+        version: 20
+build:
+    command: npm install && npx playwright install --with-deps chromium
+deploy:
+    command: node server.js
+    port: 3001
