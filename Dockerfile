@@ -16,6 +16,10 @@ RUN npm install
 
 RUN npx playwright install --with-deps chromium
 
+COPY backend/src/prisma/ ./src/prisma/ 
+
+RUN npx prisma generate --schema=./src/prisma/schema.prisma
+
 COPY backend/ .
 
 EXPOSE 3001
