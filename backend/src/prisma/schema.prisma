@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Car {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  externalId String?   @unique @map("external_id")
+  brand      String
+  model      String
+  year       Int?
+  mileage    Int?
+  price      Decimal?  @db.Decimal
+  imageUrl   String?   @map("image_url")
+  details    Json?
+  createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("cars")
+}
