@@ -31,16 +31,10 @@ router.get('/cars', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/cars/:id', async (req, res) => {
     const car = await prisma.car.findUnique({ where: { id: req.params.id } });
     if (!car) return res.status(404).json({ message: 'Not found' });
     res.json(car);
-});
-
-router.get('/force-scrape', async (req, res) => { // TODO test only
-    const scraperService = require('#services/scraper.service.js');
-    await scraperService.run();
-    res.json({ message: 'Scraping finished' });
 });
 
 export default router;

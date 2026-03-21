@@ -87,6 +87,8 @@ class ScraperService {
 				selectors,
 			);
 
+			console.log(`${rawCars.length} raw datas`);
+
 			for (const raw of rawCars) {
 				const rawBrand = raw.label;
 				const brandTrimmedTitle = raw.title
