@@ -7,11 +7,6 @@ router.get('/', async (req, res) => {
     const { page = 1, limit = 10, brand } = req.query;
     const skip = (page -1) * limit;
 
-    console.log('cars query ', req.query)
-    console.log('skip ', skip)
-    console.log('page ', page)
-    console.log('limit ', limit)
-    
     try {
         const [cars, total] = await Promise.all([
             prisma.car.findMany({
@@ -38,7 +33,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     const car = await prisma.car.findUnique({ where: { id: req.params.id } });
-    if (!car) return res.status(404).json({ message: 'Not found' });
+    if (!car) return res.status(404).json({ message: 'Не найдено' });
     res.json(car);
 });
 

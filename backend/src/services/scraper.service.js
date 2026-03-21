@@ -10,12 +10,12 @@ const host = "https://www.carsensor.net/usedcar/search.php?SKIND=1";
 const cardSelector = ".cassette";
 const labelSelector = ".cassetteMain__label + p";
 const titleSelector = ".cassetteMain__title";
-const priceSelector = ".totalPrice__mainPriceNum";
+const priceSelector = ".totalPrice__content";
 const mileageSelector = ".specList__detailBox:nth-child(2) .specList__data";
 const yearSelector = ".specList__detailBox:nth-child(1) .specList__data";
 const imgSelector = ".cassetteMain__mainImg img";
 
-const selectors = {
+const args = {
 	cardSelector,
 	labelSelector,
 	titleSelector,
@@ -52,6 +52,12 @@ class ScraperService {
 				(route) => route.abort(),
 			);
 
+			page.on("console", (msg) => {
+				if (msg.text().includes("DEBUG:")) {
+					console.log("BROWSER:", msg.text());
+				}
+			});
+
 			await page.goto(host, {
 				waitUntil: "domcontentloaded",
 				timeout: 60000,
@@ -59,8 +65,8 @@ class ScraperService {
 
 			await page.waitForSelector(cardSelector, { timeout: 15000 });
 
-			const rawCars = await page.evaluate(
-				({
+			const rawCars = await page.evaluate((args) => {
+				const {
 					cardSelector,
 					labelSelector,
 					titleSelector,
@@ -68,51 +74,53 @@ class ScraperService {
 					mileageSelector,
 					yearSelector,
 					imgSelector,
-				}) => {
-					const items = document.querySelectorAll(cardSelector);
-					return Array.from(items).map((item) => {
-						// Вытаскиваем сырые данные через DOM селекторы
-						const title =
-							item.querySelector(titleSelector)?.innerText || "";
-						const label =
-							item.querySelector(labelSelector)?.innerText || "";
-						const priceText =
-							item.querySelector(priceSelector)?.innerText || "";
-						const mileageText =
-							item.querySelector(mileageSelector)?.innerText ||
-							"";
-						const yearText =
-							item.querySelector(yearSelector)?.innerText || "";
-						const img = item.querySelector(imgSelector) || null;
-						let imgUrl =
-							img?.getAttribute("data-original") ||
-							imgElement?.src;
-						if (imgUrl && imgUrl.startsWith("//")) {
-							imgUrl = "https:" + imgUrl;
-						}
+				} = args;
+				const items = document.querySelectorAll(cardSelector);
+				return Array.from(items).map((item) => {
+					// Вытаскиваем сырые данные через DOM селекторы
+					const title =
+						item.querySelector(titleSelector)?.innerText || "";
+					const label =
+						item.querySelector(labelSelector)?.innerText || "";
+					const priceText =
+						item.querySelector(priceSelector)?.innerText || "";
+					const mileageText =
+						item.querySelector(mileageSelector)?.innerText || "";
+					const yearText =
+						item.querySelector(yearSelector)?.innerText || "";
+					const img = item.querySelector(imgSelector) || null;
+					let imgUrl =
+						img?.getAttribute("data-original") || imgElement?.src;
+					if (imgUrl && imgUrl.startsWith("//")) {
+						imgUrl = "https:" + imgUrl;
+					}
+					console.log(
+						`DEBUG: [${item.id}] Mileage text: ${item.querySelector(mileageSelector)?.outerHTML}`,
+					);
+					console.log(
+						`DEBUG: [${item.id}] Price text: ${item.querySelector(priceSelector)?.outerHTML}`,
+					);
 
-						return {
-							externalId: item.id || Math.random().toString(),
-							title: title,
-							label: label,
-							rawPrice: priceText,
-							rawMileage: mileageText,
-							year: parseInt(yearText) || null,
-							imageUrl: imgUrl,
-						};
-					});
-				},
-				selectors,
-			);
+					return {
+						externalId: item.id,
+						title: title,
+						label: label,
+						rawPrice: priceText,
+						rawMileage: mileageText,
+						year: parseInt(yearText) || null,
+						imageUrl: imgUrl,
+					};
+				});
+			}, args);
 
 			console.log(`${rawCars.length} raw datas`);
 
 			for (const raw of rawCars) {
 				const rawBrand = raw.label;
-				const brandTrimmedTitle = raw.title
+				const brandTrimedTitle = raw.title
 					.split(rawBrand)
 					.filter(Boolean);
-				const model = brandTrimmedTitle[0]
+				const model = brandTrimedTitle[0]
 					.trim()
 					.split(/\s+/)
 					.splice(0, 2)
