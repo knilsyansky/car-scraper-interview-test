@@ -20,10 +20,10 @@
       }
     ],
     "paths": {
-      "@app/*": ["./src/app"],
-      "@features/*": ["./src/features"],
-      "@entities/*": ["./src/entities"],
-      "@shared/*": ["./src/shared"]
+      "@app/*": ["./src/app/*"],
+      "@features/*": ["./src/features/*"],
+      "@entities/*": ["./src/entities/*"],
+      "@shared/*": ["./src/shared/*"]
     }
   },
   "include": [
