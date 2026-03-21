@@ -29,10 +29,28 @@ class ScraperService {
 	async run() {
 		console.log("scraper start");
 
-		const browser = await chromium.launch({ headers: true });
+		const browser = await chromium.launch({
+			headers: true,
+			args: [
+				"--no-sandbox",
+				"--disable-setuid-sandbox",
+				"--disable-dev-shm-usage",
+				"--disable-accelerated-2d-canvas",
+				"--no-first-run",
+				"--no-zygote",
+				"--single-process",
+				"--disable-gpu",
+			],
+		});
 
 		try {
-			const page = await browser.newPage();
+			const context = await browser.newContext();
+			const page = await context.newPage();
+
+			await page.route(
+				"**/*.{png,jpg,jpeg,gif,svg,css,woff,woff2}",
+				(route) => route.abort(),
+			);
 
 			await page.goto(host, {
 				waitUntil: "domcontentloaded",

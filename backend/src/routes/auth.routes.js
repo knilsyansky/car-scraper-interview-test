@@ -11,7 +11,7 @@ router.post('/login', (req, res) => {
         return res.json({ token });
     }
     
-    res.status(401).json({ message: 'Invalid credentials' });
+    res.status(401).json({ message: 'Аккаунт не найден' });
 });
 
 export default router;
