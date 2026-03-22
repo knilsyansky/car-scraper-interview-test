@@ -15,6 +15,11 @@ export async function loginAction(prevState: unknown, formData: FormData) {
 		body: JSON.stringify({ login, password }),
 	});
 
+    const contentType = res.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+        return { error: `Ошибка сервера: ${res.status}` };
+    }
+
 	const data = await res.json();
 
 	if (!res.ok) {
