@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "author": "romchik",
+  "author": "Roman",
   "license": "ISC",
   "description": "Car scrapping test frontend",
   "scripts": {

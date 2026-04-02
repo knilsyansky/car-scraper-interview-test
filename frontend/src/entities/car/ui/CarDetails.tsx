@@ -21,7 +21,6 @@ export function CarDetails({ car }: { car: ICar }) {
                     <DetailItem label="Year" value={formatYear(car.year)} />
                     <DetailItem label="Mileage" value={mileageFormat(car.mileage)} />
                     <DetailItem label="Price" value={priceFormat(car.price)} className="text-blue-600 font-bold" />
-                    {/* Мапим данные из JSONB */}
                     {car.details && Object.entries(car.details).map(([key, val]) => (
                         <DetailItem key={key} label={key} value={String(val)} />
                     ))}

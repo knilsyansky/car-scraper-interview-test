@@ -10,7 +10,7 @@
     "seed cars": "node src/utils/seed.js"
   },
   "keywords": [],
-  "author": "romchik",
+  "author": "Roman",
   "license": "ISC",
   "description": "Car scrapping test backend",
   "imports": {
