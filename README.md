@@ -96,7 +96,13 @@ npx prisma migrate dev
 npm run seed\ cars
 ```
 
-#### 4. Запуск development серверов
+#### 4. Загрузка браузера
+
+```bash
+npx playwright install --with-deps chromium
+```
+
+#### 5. Запуск development серверов
 
 **Backend** (Терминал 1):
 ```bash
@@ -112,7 +118,7 @@ npm run dev
 # Приложение на http://localhost:3000
 ```
 
-#### 5. Доступ к приложению
+#### 6. Доступ к приложению
 
 - UI: http://localhost:3000
 - API: http://localhost:3001/api

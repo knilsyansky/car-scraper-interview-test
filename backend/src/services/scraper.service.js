@@ -28,18 +28,22 @@ const args = {
 class ScraperService {
 	async run() {
 		console.log("scraper start");
+        const production = process.env.NODE_ENV === "production";
 
 		const browser = await chromium.launch({
-			headers: true,
+			headers: production,
+            userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
 			args: [
 				"--no-sandbox",
-				"--disable-setuid-sandbox",
-				"--disable-dev-shm-usage",
-				"--disable-accelerated-2d-canvas",
-				"--no-first-run",
-				"--no-zygote",
-				"--single-process",
-				"--disable-gpu",
+                ...(production ? [
+                    "--disable-setuid-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--disable-accelerated-2d-canvas",
+                    "--no-first-run",
+                    "--no-zygote",
+                    "--single-process",
+                    "--disable-gpu",
+                ] : [])
 			],
 		});
 

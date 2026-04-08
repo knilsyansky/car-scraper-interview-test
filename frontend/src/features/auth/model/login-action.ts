@@ -9,7 +9,13 @@ export async function loginAction(prevState: unknown, formData: FormData) {
 	const login = formData.get("login");
 	const password = formData.get("password");
 
-	const res = await fetch(`${host}/auth/login`, {
+    const url = `${host}/auth/login`;
+
+    console.log("Url: ", url);
+    console.log("login: ", login);
+    console.log("password: ", password);
+
+	const res = await fetch(url, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ login, password }),
@@ -17,6 +23,7 @@ export async function loginAction(prevState: unknown, formData: FormData) {
 
     const contentType = res.headers.get("content-type");
     if (!contentType || !contentType.includes("application/json")) {
+        console.error('res', res)
         return { error: `Ошибка сервера: ${res.status}` };
     }
 
