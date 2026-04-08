@@ -4,18 +4,26 @@ import { prisma } from '../prisma/prisma.js';
 const router = Router();
 
 router.get('/', async (req, res) => {
-    const { page = 1, limit = 10, brand } = req.query;
+    const { page = 1, limit = 10, brand, minPrice, maxPrice } = req.query;
     const skip = (page -1) * limit;
 
     try {
+        const where = {};
+        if (brand) where.brand = brand.trim();
+        if (minPrice || maxPrice) {
+            where.price = {};
+            if (minPrice) where.price.gte = Number(minPrice.trim());
+            if (maxPrice) where.price.lte = Number(maxPrice.trim());
+        }
+
         const [cars, total] = await Promise.all([
             prisma.car.findMany({
-                where: brand ? { brand } : {},
+                where,
                 take: Number(limit),
                 skip: Number(skip),
                 orderBy: { createdAt: 'desc' }
             }),
-            prisma.car.count({ where: brand ? { brand } : {} })
+            prisma.car.count({ where })
         ]);
 
         res.json({

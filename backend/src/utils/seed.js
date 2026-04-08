@@ -11,7 +11,7 @@ async function seed() {
 			year: 2020,
 			mileage: 45000,
 			price: 2500000,
-			imageUrl: "https://placehold.er",
+			imageUrl: null,
 			details: {
 				color: "White",
 				transmission: "AT",
@@ -24,7 +24,7 @@ async function seed() {
 			year: 2019,
 			mileage: 32000,
 			price: 1800000,
-			imageUrl: "https://placehold.co",
+			imageUrl: null,
 			details: { color: "Blue", transmission: "Electric" },
 		},
 		{
@@ -34,7 +34,7 @@ async function seed() {
 			year: 2021,
 			mileage: 15000,
 			price: 2900000,
-			imageUrl: "https://placehold.co",
+			imageUrl: null,
 			details: { color: "Black", transmission: "CVT" },
 		},
 	];

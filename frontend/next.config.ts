@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: '*.carsensor.net|placehold.*',
+                hostname: '*.carsensor.net',
                 port: '',
                 pathname: '/**'
             }
